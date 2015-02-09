@@ -1,13 +1,14 @@
 <?php namespace models;
 
 use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Laracasts\Presenter\PresentableTrait;
 
-class User extends \Jacopo\Authentication\Models\User implements UserInterface, RemindableInterface {
+class User extends \Jacopo\Authentication\Models\User {
 
 	use UserTrait, RemindableTrait;
+    use PresentableTrait;
+    protected $presenter = 'Laracasts\Presenter\UserPresenter';
 	/**
 	 * The database table used by the model.
 	 *
@@ -60,6 +61,21 @@ class User extends \Jacopo\Authentication\Models\User implements UserInterface, 
     {
         $idsWhoOtherUserFollows = $otherUser->followedUsers()->lists('followed_id');
         return in_array($this->id, $idsWhoOtherUserFollows);
+    }
+
+    public function statuses() {
+        return $this->hasMany('controllers\commands\Status');
+
+    }
+
+    public function user() {
+        return $this->belongsTo('controllers\commands\Status');
+    }
+
+
+    public function findUserByUsername($username)
+    {
+        return static::$username;
     }
 
 }
