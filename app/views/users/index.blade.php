@@ -8,8 +8,6 @@
     <h1>All Users</h1>
     @foreach($users->chunk(4) as $userSet)
         <div class="row">
-
-
             @foreach($userSet as $user)
                 <div class="col-md-3 user-block ">
                     @include ('layouts.partials.avatar', ['size' => 70])
