@@ -11,6 +11,8 @@ class User extends \Jacopo\Authentication\Models\User {
 
 
     protected $presenter = 'Laracasts\Presenter\UserPresenter';
+
+    protected static $username = 'username';
 	/**
 	 * The database table used by the model.
 	 *
