@@ -8,8 +8,6 @@ class User extends \Jacopo\Authentication\Models\User {
 
 	use UserTrait, RemindableTrait;
     use PresentableTrait;
-
-
     protected $presenter = 'Laracasts\Presenter\UserPresenter';
 
     protected static $username = 'username';

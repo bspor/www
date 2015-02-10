@@ -10,8 +10,7 @@
 		"barryvdh/laravel-ide-helper": "~1.11",
         "laracasts/validation": "~1.0",
         "laracasts/presenter": "0.1.*",
-        "laracasts/flash": "~1.0",
-		"doctrine/dbal": "2.6.x-dev"
+        "laracasts/flash": "~1.0"
 	},
   "require-dev": {
     "way/generators" : "~2.0",

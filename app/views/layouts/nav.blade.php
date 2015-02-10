@@ -32,7 +32,7 @@
                         <li class="dropdown">
 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img class="nav-gravatar" src="{{ Sentry::getUser()->username}}" alt="{{ Sentry::getUser()->username }}">
+                                <img class="nav-gravatar" src="{{ Sentry::getUser()->present()->gravatar }}" alt="{{ Sentry::getUser()->username }}">
 
                                 {{ Sentry::getUser()->username }} <span class="caret"></span>
                             </a>
