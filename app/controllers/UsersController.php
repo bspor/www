@@ -1,6 +1,8 @@
 <?php
 
 use controllers\commands\UserRepository;
+use team\Division;
+use team\Team;
 
 class UsersController extends \BaseController {
 
@@ -60,6 +62,10 @@ class UsersController extends \BaseController {
 
         return View::make('users.show')->withUser($user);
 	}
+
+    public function players () {
+        return View::make('users/players');
+    }
 
 	/**
 	 * Show the form for editing the specified resource.

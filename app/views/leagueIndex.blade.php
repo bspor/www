@@ -1,69 +1,97 @@
 @extends('layouts.master')
 
 @section('title')
-@parent
-:: Secret
+    @parent
+    :: Team Editor
 @stop
 
 @section('content')
-<div class="container">
+    <nav class="navbar breadcrumb">
+        <ul class="breadcrumb">
+            <li><a href="{{ URL::to('divisions') }}">View All Divisions</a></li>
+            <li><a href="{{ URL::to('players') }}">View All Players</a>
+        </ul>
+    </nav>
 
-<nav class="navbar navbar-inverse">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="{{ URL::to('nerds') }}">Nerd Alert</a>
-	</div>
-	<ul class="nav navbar-nav">
-		<li><a href="{{ URL::to('nerds') }}">View All Nerds</a></li>
-		<li><a href="{{ URL::to('nerds/create') }}">Create a Nerd</a>
-	</ul>
-</nav>
+    <div class="container" ng-app="myApp" ng-controller="TeamsController" >
+        <h1>Teams</h1>
 
-<h1>All the Nerds</h1>
+        <!-- will be used to show any messages -->
+        @if (Session::has('message'))
+            <div class="alert alert-info">{{ Session::get('message') }}</div>
+        @endif
 
-<!-- will be used to show any messages -->
-@if (Session::has('message'))
-	<div class="alert alert-info">{{ Session::get('message') }}</div>
-@endif
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>Logo</td>
+                <td>Wins</td>
+                <td>Losses</td>
+                <td>Points</td>
+                <td>Division</td>
+                <td>Players</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="team in teams track by $index">
+                <td>%% team.team_name %%</td>
+                <td>%% team.logo %%</td>
+                <td>%% team.wins %%</td>
+                <td>%% team.losses %%</td>
+                <td>%% team.points %%</td>
+                <td >%% team.division.name %%</td>
+                <td>
+                    <select>
+                        <option ng-repeat="player in team.players" value="player.username">%% player.username %%</option>
+                    </select>
+                </td>
 
-<table class="table table-striped table-bordered">
-	<thead>
-		<tr>
-			<td>ID</td>
-			<td>Name</td>
-			<td>Email</td>
-			<td>Nerd Level</td>
-			<td>Actions</td>
-		</tr>
-	</thead>
-	<tbody>
-	@foreach($nerds as $key => $value)
-		<tr>
-			<td>{{ $value->id }}</td>
-			<td>{{ $value->name }}</td>
-			<td>{{ $value->email }}</td>
-			<td>{{ $value->nerd_level }}</td>
 
-			<!-- we will also add show, edit, and delete buttons -->
-			<td>
+                <!-- we will also add show, edit, and delete buttons -->
+                <td>
+                    <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+                    <a class="btn btn-sm btn-success" ng-href="team/get_team/%%team.id%%" >Edit this Team</a>
+                    <a class="btn btn-sm btn-danger" href="#" ng-click="deleteTeam(team.id)" class="text-muted">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="form-control-static">
+            <!-- NEW team FORM =============================================== -->
+            <form ng-submit="addTeam()"> <!-- ng-submit will disable the default form action and use our function -->
 
-				<!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->
-				<!-- we will add this later since its a little more complicated than the first two buttons -->
-				{{ Form::open(array('url' => 'nerds/' . $value->id, 'class' => 'pull-right')) }}
-					{{ Form::hidden('_method', 'DELETE') }}
-					{{ Form::submit('Delete this Nerd', array('class' => 'btn btn-warning')) }}
-				{{ Form::close() }}
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" name="name" ng-model="team.name"
+                           placeholder="Name">
+                </div>
 
-				<!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-				<a class="btn btn-small btn-success" href="{{ URL::to('nerds/' . $value->id) }}">Show this Nerd</a>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" name="logo" ng-model="team.logo"
+                           placeholder="Logo URL">
+                </div>
 
-				<!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-				<a class="btn btn-small btn-info" href="{{ URL::to('nerds/' . $value->id . '/edit') }}">Edit this Nerd</a>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" name="wins" ng-model="team.wins"
+                           placeholder="Wins">
+                </div>
 
-			</td>
-		</tr>
-	@endforeach
-	</tbody>
-</table>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" name="losses" ng-model="team.losses"
+                           placeholder="losses">
+                </div>
 
-</div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" name="points" ng-model="team.points"
+                           placeholder="Points">
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary btn-lg">Create Team</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 @stop

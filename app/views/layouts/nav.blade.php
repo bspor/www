@@ -39,7 +39,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>{{ link_to_route('profile_path', 'Your Profile', Sentry::getUser()->username) }}</li>
-                                <li><a href="#">Another action</a></li>
+                                <li>{{ HTML::link('leagueIndex', 'Team Manager') }}</li>
                                 <li class="divider"></li>
                                 <li>{{ HTML::link('/user/logout', 'Logout') }}</li>
                             </ul>

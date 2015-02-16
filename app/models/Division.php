@@ -9,8 +9,11 @@
 namespace team;
 
 
-class Division extends eloquent {
-    protected $fillable = array('group_id','group_name','group_teams');
+class Division extends \Eloquent {
+    protected $table = 'division';
+    protected $fillable = array('div_id','name');
 
-
+    public function teams() {
+        return $this->hasMany('models\Team', 'team_id', 'div_id');
+    }
 } 

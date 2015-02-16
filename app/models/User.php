@@ -80,4 +80,9 @@ class User extends \Jacopo\Authentication\Models\User {
         return static::$username;
     }
 
+    public function team () {
+        return $this->belongsTo('team\Team', 'team_id', 'team_id');
+    }
+
+
 }

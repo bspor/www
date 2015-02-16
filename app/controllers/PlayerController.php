@@ -1,33 +1,35 @@
 <?php
 
-class ForumController extends \BaseController {
+use team\Team;
+
+class PlayerController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
+	 * GET /player
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
 		//
-		$coolBeans = Comment::get();
-		return View::make('forumviews/forum');
 	}
-
 
 	/**
 	 * Show the form for creating a new resource.
+	 * GET /player/create
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function showall()
 	{
-		//
+        $players = Team::with('Players')->get();
+        return $players;
 	}
-
 
 	/**
 	 * Store a newly created resource in storage.
+	 * POST /player
 	 *
 	 * @return Response
 	 */
@@ -36,9 +38,9 @@ class ForumController extends \BaseController {
 		//
 	}
 
-
 	/**
 	 * Display the specified resource.
+	 * GET /player/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -48,9 +50,9 @@ class ForumController extends \BaseController {
 		//
 	}
 
-
 	/**
 	 * Show the form for editing the specified resource.
+	 * GET /player/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -60,9 +62,9 @@ class ForumController extends \BaseController {
 		//
 	}
 
-
 	/**
 	 * Update the specified resource in storage.
+	 * PUT /player/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -72,9 +74,9 @@ class ForumController extends \BaseController {
 		//
 	}
 
-
 	/**
 	 * Remove the specified resource from storage.
+	 * DELETE /player/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -83,6 +85,5 @@ class ForumController extends \BaseController {
 	{
 		//
 	}
-
 
 }

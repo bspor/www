@@ -12,7 +12,6 @@
     {{ HTML:: script('js/app.js') }}
 <body ng-app="myApp" ng-controller="mainController">
 <div class="col-md-8 col-md-offset-2" ng-view>
-
 	<!-- PAGE TITLE =============================================== -->
 	<div class="page-header">
 		<h2>Laravel and Angular Single Page Application</h2>

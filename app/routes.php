@@ -11,6 +11,9 @@
 |
 */
 
+use team\Division;
+use team\Team;
+
 Route::get('/', function()
 {
 	return View::make('home');
@@ -34,32 +37,9 @@ Route::get('register', [
 
 Route::post('register_action', 'RegisterController@store');
 
-
-Route::group(array('prefix' => '/api'), function() {
-
-	// since we will be using this just for CRUD, we won't need create and edit
-	// Angular will handle both of those forms
-	// this ensures that a user can't access api/create or api/edit when there's nothing there
-	Route::resource('comment', 'CommentController', 
-		array('only' => array('index', 'store', 'destroy')));
-});
-// =============================================
-// CATCH ALL ROUTE =============================
-// =============================================
-// all routes that are not home or api will be redirected to the frontend
-// this allows angular to route them
 App::missing(function($exception)
 {
 	return View::make('index');
-});
-
-
-Route::get('leagueIndex', function() {
-
-    return View::make('bearsExample')
-// all the bears (will also return the fish, trees, and picnics that belong to them)
-        ->with('bears', Bear::all());
-
 });
 
 Route::get('statuses', [
@@ -92,3 +72,72 @@ Route::delete('follows/{id}', [
     'as' => 'unfollow_path',
     'uses' => 'FollowsController@destroy'
 ]);
+//This is where angular routes come into play
+Route::get('leagueIndex', 'LeagueController@index');
+Route::group(array('prefix' => '/team'), function() {
+    //Get all the teams
+    Route::get('get_teams', [
+        'as' => 'get_teams',
+        'uses' => 'TeamController@index'
+    ]);
+    //Get unsigned players
+    Route::get('get_unsigned', [
+        'as' => 'get_unsigned',
+        'uses' => 'TeamController@getUnsignedPlayers'
+    ]);
+
+    //get one team
+    Route::get('get_team/{id}', [
+        'as' => 'get_team/{id}',
+        'uses' => 'TeamController@show'
+    ]);
+
+    //get one team
+    Route::put('edit_team/{id}', [
+        'as' => 'edit_team/{id}',
+        'uses' => 'TeamController@update'
+    ]);
+    //delete a team
+    Route::post('{id}/delete', [
+        'as' => 'delete_team',
+        'uses' => 'TeamController@delete'
+    ]);
+
+    Route::post('create', [
+        'as' => 'create_team',
+        'uses' => 'TeamController@store'
+    ]);
+});
+
+Route::get('divisions', 'DivisionsController@index');
+Route::group(array('prefix' => '/division'), function() {
+    //Get all the teams
+    Route::get('get_divs', [
+        'as' => 'get_divs',
+        'uses' => 'DivisionsController@showall'
+    ]);
+    //delete a team
+    Route::delete('/delete/{id}', [
+        'as' => '/delete/{id}',
+        'uses' => 'DivisionsController@delete'
+    ]);
+
+    Route::post('create', [
+        'as' => 'create_div',
+        'uses' => 'DivisionsController@store'
+    ]);
+});
+
+Route::get('players', 'UsersController@players');
+
+Route::get('team/team', function()
+{
+    return View::make('team/team');
+});
+Route::group(array('prefix' => '/api'), function() {
+    Route::get('players', [
+        'as' => 'get_players',
+        'uses' => 'PlayerController@showall'
+    ]);
+});
+

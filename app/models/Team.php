@@ -7,15 +7,17 @@
  */
 
 namespace team;
+use models\Player;
 
-
-class Team extends eloquent {
+class Team extends  \Eloquent {
     protected $fillable = array('team_name', 'logo', 'wins', 'losses','points','team_id','div_id');
 
     // each team has many players
     public function players() {
-        return $this->hasMany('Player');
+        return $this->hasMany('models\User', 'team_id','team_id');
     }
 
-
+    public function division() {
+        return $this->belongsTo('team\Division', 'team_id', 'div_id');
+    }
 } 
