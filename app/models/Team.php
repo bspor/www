@@ -7,6 +7,7 @@
  */
 
 namespace team;
+use Jacopo\Authentication\Models\User;
 use models\Player;
 
 class Team extends  \Eloquent {
@@ -19,5 +20,9 @@ class Team extends  \Eloquent {
 
     public function division() {
         return $this->belongsTo('team\Division', 'team_id', 'div_id');
+    }
+
+    public function getTeamName($id) {
+        return $this->team_name;
     }
 } 

@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\View;
 use team\Division;
 
 /**
@@ -29,4 +30,6 @@ class DivisionsController  extends \BaseController {
     public function store () {
         return Division::create(Input::all());
     }
+
+
 }

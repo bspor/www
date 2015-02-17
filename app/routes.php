@@ -72,6 +72,7 @@ Route::delete('follows/{id}', [
     'as' => 'unfollow_path',
     'uses' => 'FollowsController@destroy'
 ]);
+
 //This is where angular routes come into play
 Route::get('leagueIndex', 'LeagueController@index');
 Route::group(array('prefix' => '/team'), function() {
@@ -93,13 +94,13 @@ Route::group(array('prefix' => '/team'), function() {
     ]);
 
     //get one team
-    Route::put('edit_team/{id}', [
+    Route::PUT('edit_team/{id}', [
         'as' => 'edit_team/{id}',
         'uses' => 'TeamController@update'
     ]);
     //delete a team
-    Route::post('{id}/delete', [
-        'as' => 'delete_team',
+    Route::delete('/delete/{id}', [
+        'as' => '/delete/{id}',
         'uses' => 'TeamController@delete'
     ]);
 
@@ -107,8 +108,19 @@ Route::group(array('prefix' => '/team'), function() {
         'as' => 'create_team',
         'uses' => 'TeamController@store'
     ]);
+
+    //This uses the Division controller since I dont want to create a controller for logos only
+
 });
 
+Route::get('logo', 'LogoControler@logo');
+Route::group(array('prefix' => '/logo'), function() {
+    //upload file
+    Route::post('upload', [
+        'as' => 'upload',
+        'uses' => 'LogoControler@upload'
+    ]);
+});
 Route::get('divisions', 'DivisionsController@index');
 Route::group(array('prefix' => '/division'), function() {
     //Get all the teams

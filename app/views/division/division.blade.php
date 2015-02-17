@@ -2,16 +2,11 @@
 
 @section('title')
     @parent
-    :: Team Editor
+    :: Division Editor
 @stop
 
 @section('content')
-    <nav class="navbar breadcrumb">
-        <ul class="breadcrumb">
-            <li><a href="{{ URL::to('leagueIndex') }}">View All Teams</a></li>
-            <li><a href="{{ URL::to('players') }}">View All Players</a>
-        </ul>
-    </nav>
+    @include('layouts.partials.admin_nav')
     <div class="container" ng-app="myApp" ng-controller="DivisionController">
         <h1>All the Divisions</h1>
 

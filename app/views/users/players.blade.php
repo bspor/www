@@ -5,12 +5,7 @@
     :: Look Up Users
 @stop
 @section('content')
-    <nav class="navbar breadcrumb">
-        <ul class="breadcrumb">
-            <li><a href="{{ URL::to('leagueIndex') }}">View All Teams</a></li>
-            <li><a href="{{ URL::to('divisions') }}">View All Divisions</a>
-        </ul>
-    </nav>
+    @include('layouts.partials.admin_nav')
     <div class="container" ng-app="myApp" ng-controller="PlayerController" ng-view>
         <h1>Teams with players</h1>
         <!-- will be used to show any messages -->
